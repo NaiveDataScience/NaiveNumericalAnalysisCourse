@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>test</title>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] },
+  TeX: { equationNumbers: { autoNumber: 'all' } }
+});
+</script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<style>
+body > * {
+  max-width: 42em;
+}
+body {
+  font-family: "Roboto Condensed", sans-serif;
+  padding-left: 7.5em;
+  padding-right: 7.5em;
+}
+pre, code {
+  max-width: 50em;
+  font-family: monospace;
+}
+pre.oct-code {
+  border: 1px solid Grey;
+  padding: 5px;
+}
+pre.oct-code-output {
+  margin-left: 2em;
+}
+span.comment {
+  color: ForestGreen;
+}
+span.keyword {
+  color: Blue;
+}
+span.string {
+  color: DarkOrchid;
+}
+footer {
+  margin-top: 2em;
+  font-size: 80%;
+}
+a, a:visited {
+  color: Blue;
+}
+h2 {
+  font-family: "Roboto Condensed", serif;
+  margin-top: 1.5em;
+}
+h2 a, h2 a:visited {
+  color: Black;
+}
+</style>
+</head>
+<body>
+<h1>test</h1>
+<pre class="oct-code">gamma = 0.1;
+beta = 0.7;
+x = randn(2,1);
+iterations = 1000;
+alpha_0 = 0.1;
+handler = @f;
+<span class="keyword">for</span> k = 1:iterations
+    current_grad = grad(handler, x);
+    alpha = alpha_0;
+    <span class="keyword">while</span> f(x - alpha*current_grad) > f(x) - alpha*gamma*current_grad<span class="string">'*current_grad</span>
+        alpha = beta * alpha;
+    <span class="keyword">end</span>
+    x = x - alpha*current_grad;
+<span class="keyword">end</span>
+x
+f(x)</pre><pre class="oct-code-output">x =
+  -3.4707e-01
+  -5.0000e-04
+ans =  2.5593
+</pre>
+<footer><hr><a href="http://www.octave.org">Published with GNU Octave 4.2.1</a></footer>
+<!--
+##### SOURCE BEGIN #####
+gamma = 0.1;
+beta = 0.7;
+x = randn(2,1);
+iterations = 1000;
+alpha_0 = 0.1;
+handler = @f;
+for k = 1:iterations
+    current_grad = grad(handler, x);
+    alpha = alpha_0;
+    while f(x - alpha*current_grad) > f(x) - alpha*gamma*current_grad'*current_grad
+        alpha = beta * alpha;
+    end
+    x = x - alpha*current_grad;
+end
+x
+f(x)
+
+##### SOURCE END #####
+-->
+</body>
+</html>
