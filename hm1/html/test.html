@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Homework 2</title>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] },
+  TeX: { equationNumbers: { autoNumber: 'all' } }
+});
+</script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<style>
+body > * {
+  max-width: 42em;
+}
+body {
+  font-family: "Roboto Condensed", sans-serif;
+  padding-left: 7.5em;
+  padding-right: 7.5em;
+}
+pre, code {
+  max-width: 50em;
+  font-family: monospace;
+}
+pre.oct-code {
+  border: 1px solid Grey;
+  padding: 5px;
+}
+pre.oct-code-output {
+  margin-left: 2em;
+}
+span.comment {
+  color: ForestGreen;
+}
+span.keyword {
+  color: Blue;
+}
+span.string {
+  color: DarkOrchid;
+}
+footer {
+  margin-top: 2em;
+  font-size: 80%;
+}
+a, a:visited {
+  color: Blue;
+}
+h2 {
+  font-family: "Roboto Condensed", serif;
+  margin-top: 1.5em;
+}
+h2 a, h2 a:visited {
+  color: Black;
+}
+</style>
+</head>
+<body>
+<h1>Homework 2</h1>
+<p>ID:15307130224</p><p>Here are three problems about error
+This documentation will demonstrate it.</p><h2>Contents</h2><ul><li><a href="#node1">Quesion 1</a></li><li><a href="#node2">Question2 Test vector norm-1,2,inf</a></li><li><a href="#node3">Question2 Test vector norm-1,2,inf</a></li></ul><h2><a id="node1">Quesion 1</a></h2><p>The random matrixs are A and B, matlab<i>result is the result computed by matlab, and the your</i>result is the result computed by your naive method,
+We use fro norm to calculate the error in computing matrix product</p><pre class="oct-code">fprintf(<span class="string">"Raw matrix A:\n"</span>);
+A = rand(5, 5);
+
+fprintf(<span class="string">"Raw matrix B:\n"</span>);
+B = rand(5, 5);
+
+fprintf(<span class="string">"A*B by matlab\n"</span>);
+matlab_result = A*B
+
+
+fprintf(<span class="string">"A*B by yourself\n"</span>);
+your_result = calculate_matrix(A,B)
+
+error_result = your_result.-matlab_result;
+
+fprintf(<span class="string">"Error result is:\n"</span>);
+norm(error_result, <span class="string">'fro'</span>)</pre><pre class="oct-code-output">Raw matrix A:
+Raw matrix B:
+A*B by matlab
+matlab_result =
+   0.52124   0.72412   1.67029   2.38773   1.16375
+   0.47205   1.04723   1.95913   2.54311   1.27556
+   0.29457   0.91196   1.34428   1.88456   0.92478
+   0.50838   0.44054   1.88266   2.38843   1.15019
+   0.44386   0.63852   1.62054   2.21683   1.03325
+A*B by yourself
+your_result =
+   0.52124   0.72412   1.67029   2.38773   1.16375
+   0.47205   1.04723   1.95913   2.54311   1.27556
+   0.29457   0.91196   1.34428   1.88456   0.92478
+   0.50838   0.44054   1.88266   2.38843   1.15019
+   0.44386   0.63852   1.62054   2.21683   1.03325
+Error result is:
+ans =    5.2074e-16
+</pre><h2><a id="node2">Question2 Test vector norm-1,2,inf</a></h2><pre class="oct-code">random_vector = rand(100, 1);
+
+<span class="comment">% Calculate by the matlab</span>
+
+matlab_vector_1 = norm(random_vector, 1)
+matlab_vector_2 =norm(random_vector, 2)
+matlab_vector_inf = norm(random_vector, inf)
+
+
+<span class="comment">% calculate by yourself</span>
+
+x_vector_1 = sum(abs(random_vector))
+x_vector_2 = sqrt(sum(random_vector.^2))
+x_vector_inf = max(abs(random_vector))
+
+error_1 = (x_vector_1-matlab_vector_1)/matlab_vector_1
+error_2 = (x_vector_2-matlab_vector_2)/matlab_vector_2
+error_inf = (x_vector_inf-matlab_vector_inf)/matlab_vector_inf</pre><pre class="oct-code-output">matlab_vector_1 =  51.311
+matlab_vector_2 =  5.8258
+matlab_vector_inf =  0.99724
+x_vector_1 =  51.311
+x_vector_2 =  5.8258
+x_vector_inf =  0.99724
+error_1 = 0
+error_2 = 0
+error_inf = 0
+</pre><h2><a id="node3">Question2 Test vector norm-1,2,inf</a></h2><pre class="oct-code">random_matrix = rand(10, 10);
+n = size(random_matrix, 2);
+m = size(random_matrix, 1);
+matlab_matrix_1 = norm(random_matrix, 1)
+matlab_matrix_2 = norm(random_matrix, 2)
+matlab_matrix_inf = norm(random_matrix, inf)
+
+
+x_matrix_1 = max(sum(abs(random_matrix)(:,1:n),1))
+
+x_matrix_2 = sqrt(max(eig(random_matrix<span class="string">'*random_matrix)))</span>
+
+
+x_matrix_inf = max(sum(abs(random_matrix)(1:m,:),2))
+
+(matlab_matrix_1-x_matrix_1)/matlab_matrix_1
+(matlab_matrix_2-x_matrix_2)/matlab_matrix_2
+(matlab_matrix_inf-x_matrix_inf)/matlab_matrix_inf</pre><pre class="oct-code-output">matlab_matrix_1 =  7.6830
+matlab_matrix_2 =  5.3041
+matlab_matrix_inf =  6.5658
+x_matrix_1 =  7.6830
+x_matrix_2 =  5.3041
+x_matrix_inf =  6.5658
+ans = 0
+ans = 0
+ans = 0
+</pre>
+<footer><hr><a href="http://www.octave.org">Published with GNU Octave 4.2.1</a></footer>
+<!--
+##### SOURCE BEGIN #####
+%% Homework 2
+% ID:15307130224
+%
+% Here are three problems about error
+% This documentation will demonstrate it.
+%
+%% Quesion 1
+%
+% The random matrixs are A and B, matlab_result is the result computed by matlab, and the your_result is the result computed by your naive method,
+% We use fro norm to calculate the error in computing matrix product
+
+%%
+
+fprintf("Raw matrix A:\n");
+A = rand(5, 5);
+
+fprintf("Raw matrix B:\n");
+B = rand(5, 5);
+
+fprintf("A*B by matlab\n");
+matlab_result = A*B
+
+
+fprintf("A*B by yourself\n");
+your_result = calculate_matrix(A,B)
+
+error_result = your_result.-matlab_result;
+
+fprintf("Error result is:\n");
+norm(error_result, 'fro')
+%%
+
+
+
+%% Question2 Test vector norm-1,2,inf
+%%
+
+random_vector = rand(100, 1);
+
+% Calculate by the matlab
+
+matlab_vector_1 = norm(random_vector, 1)
+matlab_vector_2 =norm(random_vector, 2)
+matlab_vector_inf = norm(random_vector, inf)
+
+
+% calculate by yourself
+
+x_vector_1 = sum(abs(random_vector))
+x_vector_2 = sqrt(sum(random_vector.^2))
+x_vector_inf = max(abs(random_vector))
+
+error_1 = (x_vector_1-matlab_vector_1)/matlab_vector_1
+error_2 = (x_vector_2-matlab_vector_2)/matlab_vector_2
+error_inf = (x_vector_inf-matlab_vector_inf)/matlab_vector_inf
+
+%%
+
+%% Question2 Test vector norm-1,2,inf
+%%
+
+random_matrix = rand(10, 10);
+n = size(random_matrix, 2);
+m = size(random_matrix, 1);
+matlab_matrix_1 = norm(random_matrix, 1)
+matlab_matrix_2 = norm(random_matrix, 2)
+matlab_matrix_inf = norm(random_matrix, inf)
+
+
+x_matrix_1 = max(sum(abs(random_matrix)(:,1:n),1))
+
+x_matrix_2 = sqrt(max(eig(random_matrix'*random_matrix)))
+
+
+x_matrix_inf = max(sum(abs(random_matrix)(1:m,:),2))
+
+(matlab_matrix_1-x_matrix_1)/matlab_matrix_1
+(matlab_matrix_2-x_matrix_2)/matlab_matrix_2
+(matlab_matrix_inf-x_matrix_inf)/matlab_matrix_inf
+
+%%
+
+##### SOURCE END #####
+-->
+</body>
+</html>
